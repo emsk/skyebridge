@@ -2,10 +2,16 @@
   "name": "skyebridge",
   "version": "0.1.0",
   "description": "Transition diagram generator",
-  "main": "index.js",
+  "main": "cli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "skyebridge": "cli.js"
+  },
   "author": "emsk",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.20.0"
+  }
 }
