@@ -21,13 +21,17 @@ const validation = cmd => {
   }
 };
 
-const generateHTML = (nodes, edges) => {
+const generateHTML = async (nodes, edges) => {
+  const css = await readFileAsync('./assets/vis-network.min.css', 'utf8');
+  const js = await readFileAsync('./assets/vis-network.min.js', 'utf8');
+
   return `<!DOCTYPE HTML>
 <html>
   <head>
     <title>Transition Diagram</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.css">
     <style>
+${css}
+
       body {
         margin: 0;
       }
@@ -38,8 +42,9 @@ const generateHTML = (nodes, edges) => {
   </head>
   <body>
     <div id="diagram"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
     <script>
+${js}
+
       const nodes = JSON.parse('${JSON.stringify(nodes)}');
 
       nodes.forEach((node, index) => {
@@ -111,7 +116,7 @@ program
     const data = await readFileAsync(cmd.input, 'utf8');
     const transitions = JSON.parse(data);
     const {nodes, edges} = transitions;
-    const html = generateHTML(nodes, edges);
+    const html = await generateHTML(nodes, edges);
 
     await mkdirAsync(path.dirname(cmd.output), {recursive: true});
     await writeFileAsync(cmd.output, html);
