@@ -2,6 +2,8 @@
 
 skyebridge is a command-line tool to generate an interactive transition diagram from a JSON file.
 
+![Skye Bridge](skyebridge.jpg?raw=true)
+
 ## Installation
 
 WIP
