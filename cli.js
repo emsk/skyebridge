@@ -47,7 +47,7 @@ ${js}
 
       const nodes = JSON.parse('${JSON.stringify(nodes)}');
 
-      nodes.forEach((node, index) => {
+      nodes.forEach(function (node, index) {
         if (node.level === undefined) {
           node.level = index;
         }

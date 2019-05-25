@@ -49,7 +49,7 @@
 
       const nodes = JSON.parse('[{"id":1,"label":"Page 1"},{"id":2,"label":"Page 2"},{"id":3,"label":"Page 3","level":0},{"id":4,"label":"Page 4","level":1},{"id":5,"label":"Page 5","level":2},{"id":6,"label":"Page 6","level":3},{"id":7,"label":"Page 7","level":4}]');
 
-      nodes.forEach((node, index) => {
+      nodes.forEach(function (node, index) {
         if (node.level === undefined) {
           node.level = index;
         }
