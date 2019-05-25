@@ -4,6 +4,7 @@
   "description": "Transition diagram generator",
   "main": "cli.js",
   "scripts": {
+    "lint": "xo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -13,5 +14,20 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^2.20.0"
+  },
+  "devDependencies": {
+    "xo": "^0.24.0"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "quotes": [
+        "error",
+        "single",
+        {
+          "avoidEscape": true
+        }
+      ]
+    }
   }
 }
