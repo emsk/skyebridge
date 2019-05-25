@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const program = require('commander');
 const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
+const program = require('commander');
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
