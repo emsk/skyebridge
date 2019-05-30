@@ -50,4 +50,4 @@ Try [this example](examples/diagram.html).
 
 ## License
 
-MIT
+[MIT](LICENSE)
