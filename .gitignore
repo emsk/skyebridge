@@ -2,3 +2,4 @@
 *-debug.log
 *-error.log
 node_modules
+.nyc_output
