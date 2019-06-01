@@ -4,6 +4,3 @@ os:
 language: node_js
 node_js:
   - "10"
-before_script: |
-  ls -l ~/build/emsk/skyebridge
-  sudo chown -R $(whoami) ~/build/emsk/skyebridge

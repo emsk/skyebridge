@@ -16,7 +16,7 @@ tmp.setGracefulCleanup();
 
 test('given `--input` and `--output` options', async t => {
   const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
-  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const tmpDir = await tmpDirAsync({dir: cwd, mode: '0777', unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
   const {code, stdout, stderr} = await cli(['--input', transitionsFile, '--output', diagramFile]);
@@ -40,7 +40,7 @@ test('given `--input` option', async t => {
 });
 
 test('given `--output` option', async t => {
-  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const tmpDir = await tmpDirAsync({dir: cwd, mode: '0777', unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
   const {code, stdout, stderr} = await t.throwsAsync(cli(['--output', diagramFile]));
