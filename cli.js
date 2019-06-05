@@ -24,14 +24,14 @@ const validation = cmd => {
   }
 };
 
-const generateHTML = async (nodes, edges) => {
+const generateHTML = async (nodes, edges, title) => {
   const css = await readFileAsync('./assets/vis-network.min.css', 'utf8');
   const js = await readFileAsync('./assets/vis-network.min.js', 'utf8');
 
   return `<!DOCTYPE HTML>
 <html>
   <head>
-    <title>Transition Diagram</title>
+    <title>${title}</title>
     <style>
 ${css}
 
@@ -113,6 +113,7 @@ program
   .version('0.1.0', '-v, --version')
   .option('-i, --input <input>', 'path of a JSON file in which the transitions are defined')
   .option('-o, --output <output>', 'path of a generated HTML file')
+  .option('-t, --title <title>', 'content of <title></title> in the generated HTML', 'Transition Diagram')
   .option('-m, --minify', 'minify the generated HTML')
   .action(async cmd => {
     validation(cmd);
@@ -120,7 +121,7 @@ program
     const data = await readFileAsync(cmd.input, 'utf8');
     const transitions = JSON.parse(data);
     const {nodes, edges} = transitions;
-    let html = await generateHTML(nodes, edges);
+    let html = await generateHTML(nodes, edges, cmd.title);
 
     if (cmd.minify) {
       const minifyOptions = {
