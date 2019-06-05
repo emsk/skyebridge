@@ -8,11 +8,26 @@ skyebridge is a command-line tool to generate an interactive transition diagram 
 
 ## Installation
 
-WIP
+```sh
+$ git clone https://github.com/emsk/skyebridge.git
+$ cd skyebridge
+$ npm link
+```
 
 ## Usage
 
-WIP
+```sh
+$ skyebridge --input transitions.json --output diagram.html
+```
+
+## Command Options
+
+| Option | Alias | Description | Default | Required |
+| :----- | :---- | :---------- | :------ | :------- |
+| `--input` | `-i` | Path of a JSON file in which the transitions are defined. | | Yes |
+| `--output` | `-o` | Path of a generated HTML file. | | Yes |
+| `--title` | `-t` | Content of `<title></title>` in the generated HTML. | `Transition Diagram` | No |
+| `--minify` | `-m` | Minify the generated HTML. | | No |
 
 ## Example
 
