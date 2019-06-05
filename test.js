@@ -29,6 +29,21 @@ test('given `--input` and `--output` options', async t => {
   t.is(stderr, '');
 });
 
+test('given `--input` and `--output` and `--minify` options', async t => {
+  const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+
+  const {code, stdout, stderr} = await cli(['--input', transitionsFile, '--output', diagramFile, '--minify']);
+
+  const actual = await readFileAsync(diagramFile, 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_minified.html'), 'utf8');
+  t.is(actual, expected);
+  t.is(code, 0);
+  t.is(stdout, '');
+  t.is(stderr, '');
+});
+
 test('given `--input` option', async t => {
   const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
 

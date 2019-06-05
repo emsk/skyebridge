@@ -13,7 +13,9 @@
   "author": "emsk",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.20.0"
+    "commander": "^2.20.0",
+    "html-minifier": "^4.0.0",
+    "terser": "^4.0.0"
   },
   "devDependencies": {
     "ava": "^1.4.1",

@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
 const program = require('commander');
+const HTMLMinifier = require('html-minifier');
+const Terser = require('terser');
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
@@ -111,13 +113,23 @@ program
   .version('0.1.0', '-v, --version')
   .option('-i, --input <input>', 'path of a JSON file in which the transitions are defined')
   .option('-o, --output <output>', 'path of a generated HTML file')
+  .option('-m, --minify', 'minify the generated HTML')
   .action(async cmd => {
     validation(cmd);
 
     const data = await readFileAsync(cmd.input, 'utf8');
     const transitions = JSON.parse(data);
     const {nodes, edges} = transitions;
-    const html = await generateHTML(nodes, edges);
+    let html = await generateHTML(nodes, edges);
+
+    if (cmd.minify) {
+      const minifyOptions = {
+        collapseWhitespace: true,
+        minifyCSS: true,
+        minifyJS: text => Terser.minify(text).code
+      };
+      html = HTMLMinifier.minify(html, minifyOptions);
+    }
 
     await mkdirAsync(path.dirname(cmd.output), {recursive: true});
     await writeFileAsync(cmd.output, html);
