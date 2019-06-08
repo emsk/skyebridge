@@ -15,6 +15,7 @@
   "dependencies": {
     "commander": "^2.20.0",
     "html-minifier": "^4.0.0",
+    "ora": "^3.4.0",
     "terser": "^4.0.0"
   },
   "devDependencies": {

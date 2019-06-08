@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
 const program = require('commander');
+const ora = require('ora');
 const HTMLMinifier = require('html-minifier');
 const Terser = require('terser');
 
@@ -13,15 +14,17 @@ const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
 const validation = cmd => {
+  const errors = [];
+
   if (cmd.input === undefined) {
-    console.error("No value provided for required options '--input'");
-    process.exit(1);
+    errors.push("'--input'");
   }
 
   if (cmd.output === undefined) {
-    console.error("No value provided for required options '--output'");
-    process.exit(1);
+    errors.push("'--output'");
   }
+
+  return errors;
 };
 
 const generateHTML = async (nodes, edges, title) => {
@@ -116,7 +119,14 @@ program
   .option('-t, --title <title>', 'content of <title></title> in the generated HTML', 'Transition Diagram')
   .option('-m, --minify', 'minify the generated HTML')
   .action(async cmd => {
-    validation(cmd);
+    const spinner = ora({text: 'Generating diagram', stream: process.stdout}).start();
+
+    const errors = validation(cmd);
+    if (errors.length > 0) {
+      spinner.stream = process.stderr;
+      spinner.fail(`No value provided for required options: ${errors.join(', ')}`);
+      process.exit(1);
+    }
 
     const data = await readFileAsync(cmd.input, 'utf8');
     const transitions = JSON.parse(data);
@@ -134,5 +144,7 @@ program
 
     await mkdirAsync(path.dirname(cmd.output), {recursive: true});
     await writeFileAsync(cmd.output, html);
+
+    spinner.succeed('Done');
   })
   .parse(process.argv);

@@ -25,7 +25,7 @@ test('given `--input` and `--output` options', async t => {
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, '');
+  t.is(stdout, '- Generating diagram\n✔ Done');
   t.is(stderr, '');
 });
 
@@ -40,7 +40,7 @@ test('given `--input`, `--output`, and `--minify` options', async t => {
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, '');
+  t.is(stdout, '- Generating diagram\n✔ Done');
   t.is(stderr, '');
 });
 
@@ -56,7 +56,7 @@ test('given `--input`, `--output`, and `--title` options', async t => {
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, '');
+  t.is(stdout, '- Generating diagram\n✔ Done');
   t.is(stderr, '');
 });
 
@@ -72,7 +72,7 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, '');
+  t.is(stdout, '- Generating diagram\n✔ Done');
   t.is(stderr, '');
 });
 
@@ -82,8 +82,8 @@ test('given `--input` option', async t => {
   const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', transitionsFile]));
 
   t.is(code, 1);
-  t.is(stdout, '');
-  t.is(stderr, "No value provided for required options '--output'\n");
+  t.is(stdout, '- Generating diagram\n');
+  t.is(stderr, "✖ No value provided for required options: '--output'\n");
 });
 
 test('given `--output` option', async t => {
@@ -93,6 +93,14 @@ test('given `--output` option', async t => {
   const {code, stdout, stderr} = await t.throwsAsync(cli(['--output', diagramFile]));
 
   t.is(code, 1);
-  t.is(stdout, '');
-  t.is(stderr, "No value provided for required options '--input'\n");
+  t.is(stdout, '- Generating diagram\n');
+  t.is(stderr, "✖ No value provided for required options: '--input'\n");
+});
+
+test('given no options', async t => {
+  const {code, stdout, stderr} = await t.throwsAsync(cli([]));
+
+  t.is(code, 1);
+  t.is(stdout, '- Generating diagram\n');
+  t.is(stderr, "✖ No value provided for required options: '--input', '--output'\n");
 });
