@@ -112,7 +112,12 @@ ${js}
 </html>`;
 };
 
+if (process.argv.length === 2) {
+  process.argv.push('--help');
+}
+
 program
+  .name('skyebridge')
   .version('0.1.0', '-v, --version')
   .option('-i, --input <input>', 'path of a JSON file in which the transitions are defined')
   .option('-o, --output <output>', 'path of a generated HTML file')

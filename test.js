@@ -12,6 +12,16 @@ const cli = (args, options) => execa(path.join(cwd, 'cli.js'), args, options);
 const readFileAsync = promisify(fs.readFile);
 const tmpDirAsync = promisify(tmp.dir);
 
+const helpText = `Usage: skyebridge [options]
+
+Options:
+  -v, --version          output the version number
+  -i, --input <input>    path of a JSON file in which the transitions are defined
+  -o, --output <output>  path of a generated HTML file
+  -t, --title <title>    content of <title></title> in the generated HTML (default: "Transition Diagram")
+  -m, --minify           minify the generated HTML
+  -h, --help             output usage information`;
+
 tmp.setGracefulCleanup();
 
 test('given `--input` and `--output` options', async t => {
@@ -97,10 +107,18 @@ test('given `--output` option', async t => {
   t.is(stderr, "✖ No value provided for required options: '--input'\n");
 });
 
-test('given no options', async t => {
-  const {code, stdout, stderr} = await t.throwsAsync(cli([]));
+test('given `--help` option', async t => {
+  const {code, stdout, stderr} = await cli(['--help']);
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.is(stderr, "✖ No value provided for required options: '--input', '--output'\n");
+  t.is(code, 0);
+  t.is(stdout, helpText);
+  t.is(stderr, '');
+});
+
+test('given no options', async t => {
+  const {code, stdout, stderr} = await cli([]);
+
+  t.is(code, 0);
+  t.is(stdout, helpText);
+  t.is(stderr, '');
 });
