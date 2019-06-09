@@ -8,6 +8,7 @@ const program = require('commander');
 const ora = require('ora');
 const HTMLMinifier = require('html-minifier');
 const Terser = require('terser');
+const pkg = require('./package.json');
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
@@ -118,7 +119,7 @@ if (process.argv.length === 2) {
 
 program
   .name('skyebridge')
-  .version('0.1.0', '-v, --version')
+  .version(pkg.version, '-v, --version')
   .option('-i, --input <input>', 'path of a JSON file in which the transitions are defined')
   .option('-o, --output <output>', 'path of a generated HTML file')
   .option('-t, --title <title>', 'content of <title></title> in the generated HTML', 'Transition Diagram')

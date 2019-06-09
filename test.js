@@ -6,6 +6,7 @@ const {promisify} = require('util');
 const tmp = require('tmp');
 const test = require('ava');
 const execa = require('execa');
+const pkg = require('./package.json');
 
 const cwd = __dirname;
 const cli = (args, options) => execa(path.join(cwd, 'cli.js'), args, options);
@@ -105,6 +106,14 @@ test('given `--output` option', async t => {
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');
   t.is(stderr, "✖ No value provided for required options: '--input'\n");
+});
+
+test('given `--version` option', async t => {
+  const {code, stdout, stderr} = await cli(['--version']);
+
+  t.is(code, 0);
+  t.is(stdout, pkg.version);
+  t.is(stderr, '');
 });
 
 test('given `--help` option', async t => {
