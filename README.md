@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/emsk/skyebridge.svg?branch=master)](https://travis-ci.org/emsk/skyebridge)
 [![Build status](https://ci.appveyor.com/api/projects/status/t4f8lvatqdb3l4kj?svg=true)](https://ci.appveyor.com/project/emsk/skyebridge)
 
-skyebridge is a command-line tool to generate an interactive transition diagram from a JSON file.
+skyebridge is a command-line tool to generate an interactive flow diagram from a JSON file.
 
 ![Skye Bridge](skyebridge.jpg?raw=true)
 
@@ -18,21 +18,21 @@ $ npm link
 ## Usage
 
 ```sh
-$ skyebridge --input transitions.json --output diagram.html
+$ skyebridge --input flow.json --output diagram.html
 ```
 
 ## Command Options
 
 | Option | Alias | Description | Default | Required |
 | :----- | :---- | :---------- | :------ | :------- |
-| `--input` | `-i` | Path of a JSON file in which the transitions are defined. | | Yes |
+| `--input` | `-i` | Path of a JSON file in which the flow is defined. | | Yes |
 | `--output` | `-o` | Path of a generated HTML file. | | Yes |
-| `--title` | `-t` | Content of `<title></title>` in the generated HTML. | `Transition Diagram` | No |
+| `--title` | `-t` | Content of `<title></title>` in the generated HTML. | `Flow Diagram` | No |
 | `--minify` | `-m` | Minify the generated HTML. | | No |
 
 ## Example
 
-Input file (A JSON file in which transitions are defined):
+Input file (A JSON file in which flow is defined):
 
 ```json
 {
@@ -58,7 +58,7 @@ Input file (A JSON file in which transitions are defined):
 }
 ```
 
-Output file (An HTML file in which a transition diagram is drawn):
+Output file (An HTML file in which a flow diagram is drawn):
 
 ![Diagram](examples/diagram.png?raw=true)
 

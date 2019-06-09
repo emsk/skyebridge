@@ -1,7 +1,7 @@
 {
   "name": "skyebridge",
   "version": "0.1.0",
-  "description": "Transition diagram generator",
+  "description": "Flow diagram generator",
   "main": "cli.js",
   "scripts": {
     "lint": "xo",

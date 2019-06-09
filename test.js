@@ -17,20 +17,20 @@ const helpText = `Usage: skyebridge [options]
 
 Options:
   -v, --version          output the version number
-  -i, --input <input>    path of a JSON file in which the transitions are defined
+  -i, --input <input>    path of a JSON file in which the flow is defined
   -o, --output <output>  path of a generated HTML file
-  -t, --title <title>    content of <title></title> in the generated HTML (default: "Transition Diagram")
+  -t, --title <title>    content of <title></title> in the generated HTML (default: "Flow Diagram")
   -m, --minify           minify the generated HTML
   -h, --help             output usage information`;
 
 tmp.setGracefulCleanup();
 
 test('given `--input` and `--output` options', async t => {
-  const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
+  const flowFile = path.join(cwd, 'examples', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await cli(['--input', transitionsFile, '--output', diagramFile]);
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile]);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram.html'), 'utf8');
@@ -41,11 +41,11 @@ test('given `--input` and `--output` options', async t => {
 });
 
 test('given `--input`, `--output`, and `--minify` options', async t => {
-  const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
+  const flowFile = path.join(cwd, 'examples', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await cli(['--input', transitionsFile, '--output', diagramFile, '--minify']);
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_minified.html'), 'utf8');
@@ -56,12 +56,12 @@ test('given `--input`, `--output`, and `--minify` options', async t => {
 });
 
 test('given `--input`, `--output`, and `--title` options', async t => {
-  const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
+  const flowFile = path.join(cwd, 'examples', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await cli(['--input', transitionsFile, '--output', diagramFile, '--title', title]);
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title]);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed.html'), 'utf8');
@@ -72,12 +72,12 @@ test('given `--input`, `--output`, and `--title` options', async t => {
 });
 
 test('given `--input`, `--output`, `--title`, and `--minify` options', async t => {
-  const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
+  const flowFile = path.join(cwd, 'examples', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await cli(['--input', transitionsFile, '--output', diagramFile, '--title', title, '--minify']);
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed_minified.html'), 'utf8');
@@ -88,9 +88,9 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
 });
 
 test('given `--input` option', async t => {
-  const transitionsFile = path.join(cwd, 'examples', 'transitions.json');
+  const flowFile = path.join(cwd, 'examples', 'flow.json');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', transitionsFile]));
+  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile]));
 
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');

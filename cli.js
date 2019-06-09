@@ -120,9 +120,9 @@ if (process.argv.length === 2) {
 program
   .name('skyebridge')
   .version(pkg.version, '-v, --version')
-  .option('-i, --input <input>', 'path of a JSON file in which the transitions are defined')
+  .option('-i, --input <input>', 'path of a JSON file in which the flow is defined')
   .option('-o, --output <output>', 'path of a generated HTML file')
-  .option('-t, --title <title>', 'content of <title></title> in the generated HTML', 'Transition Diagram')
+  .option('-t, --title <title>', 'content of <title></title> in the generated HTML', 'Flow Diagram')
   .option('-m, --minify', 'minify the generated HTML')
   .action(async cmd => {
     const spinner = ora({text: 'Generating diagram', stream: process.stdout}).start();
@@ -135,8 +135,8 @@ program
     }
 
     const data = await readFileAsync(cmd.input, 'utf8');
-    const transitions = JSON.parse(data);
-    const {nodes, edges} = transitions;
+    const flow = JSON.parse(data);
+    const {nodes, edges} = flow;
     let html = await generateHTML(nodes, edges, cmd.title);
 
     if (cmd.minify) {
