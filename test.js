@@ -13,8 +13,6 @@ const cli = (args, options) => execa(path.join(cwd, 'cli.js'), args, options);
 const readFileAsync = promisify(fs.readFile);
 const tmpDirAsync = promisify(tmp.dir);
 
-const succeedMark = process.platform === 'win32' ? '√' : '✔';
-const failMark = process.platform === 'win32' ? '×' : '✖';
 const helpText = `Usage: skyebridge [options]
 
 Options:
@@ -38,7 +36,7 @@ test('given `--input` and `--output` options', async t => {
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, `- Generating diagram\n${succeedMark} Done`);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
 
@@ -53,7 +51,7 @@ test('given `--input`, `--output`, and `--minify` options', async t => {
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, `- Generating diagram\n${succeedMark} Done`);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
 
@@ -69,7 +67,7 @@ test('given `--input`, `--output`, and `--title` options', async t => {
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, `- Generating diagram\n${succeedMark} Done`);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
 
@@ -85,7 +83,7 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
   const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
-  t.is(stdout, `- Generating diagram\n${succeedMark} Done`);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
 
@@ -96,7 +94,7 @@ test('given `--input` option', async t => {
 
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');
-  t.is(stderr, `${failMark} No value provided for required options: '--output'\n`);
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--output'\n$/);
 });
 
 test('given `--output` option', async t => {
@@ -107,7 +105,7 @@ test('given `--output` option', async t => {
 
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');
-  t.is(stderr, `${failMark} No value provided for required options: '--input'\n`);
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
 });
 
 test('given `--version` option', async t => {
