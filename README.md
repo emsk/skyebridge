@@ -10,9 +10,7 @@ skyebridge is a command-line tool to generate a flow diagram from a JSON file.
 ## Installation
 
 ```sh
-$ git clone https://github.com/emsk/skyebridge.git
-$ cd skyebridge
-$ npm link
+$ npm install --global skyebridge
 ```
 
 ## Usage
