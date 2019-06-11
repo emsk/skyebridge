@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/emsk/skyebridge.svg?branch=master)](https://travis-ci.org/emsk/skyebridge)
 [![Build status](https://ci.appveyor.com/api/projects/status/t4f8lvatqdb3l4kj?svg=true)](https://ci.appveyor.com/project/emsk/skyebridge)
 
-skyebridge is a command-line tool to generate an interactive flow diagram from a JSON file.
+skyebridge is a command-line tool to generate a flow diagram from a JSON file.
 
 ![Skye Bridge](skyebridge.jpg?raw=true)
 
