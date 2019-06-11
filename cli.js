@@ -29,8 +29,8 @@ const validation = cmd => {
 };
 
 const generateHTML = async (nodes, edges, title) => {
-  const css = await readFileAsync('./assets/vis-network.min.css', 'utf8');
-  const js = await readFileAsync('./assets/vis-network.min.js', 'utf8');
+  const css = await readFileAsync(path.join(__dirname, 'assets/vis-network.min.css'), 'utf8');
+  const js = await readFileAsync(path.join(__dirname, 'assets/vis-network.min.js'), 'utf8');
 
   return `<!DOCTYPE HTML>
 <html>
