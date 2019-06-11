@@ -2,16 +2,25 @@
   "name": "skyebridge",
   "version": "0.1.0",
   "description": "Flow diagram generator",
+  "keywords": [
+    "cli",
+    "diagram",
+    "generator",
+    "flow",
+    "transition"
+  ],
+  "license": "MIT",
+  "author": "emsk",
+  "files": [
+    "assets"
+  ],
   "main": "cli.js",
+  "bin": "cli.js",
+  "repository": "emsk/skyebridge",
   "scripts": {
     "lint": "xo",
     "test": "nyc ava --verbose"
   },
-  "bin": {
-    "skyebridge": "cli.js"
-  },
-  "author": "emsk",
-  "license": "MIT",
   "dependencies": {
     "commander": "^2.20.0",
     "html-minifier": "^4.0.0",
@@ -24,6 +33,9 @@
     "nyc": "^14.1.1",
     "tmp": "^0.1.0",
     "xo": "^0.24.0"
+  },
+  "engines": {
+    "node": ">=10.12.0"
   },
   "xo": {
     "space": true,
