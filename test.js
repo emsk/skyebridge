@@ -135,7 +135,7 @@ test('given `--input` with non-existent path', async t => {
 
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, new RegExp(String.raw`^(✖|×) ENOENT: no such file or directory, open '${flowFile}'\n$`));
+  t.regex(stderr, new RegExp(`^(✖|×) ENOENT: no such file or directory, open '${flowFile.replace(/\\/g, '\\\\')}'\n$`));
 });
 
 test('given `--input` with invalid keys (`nodes`)', async t => {
