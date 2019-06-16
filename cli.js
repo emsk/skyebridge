@@ -25,7 +25,9 @@ const validation = cmd => {
     errors.push("'--output'");
   }
 
-  return errors;
+  if (errors.length > 0) {
+    throw new Error(`No value provided for required options: ${errors.join(', ')}`);
+  }
 };
 
 const generateHTML = async (nodes, edges, title) => {
@@ -127,29 +129,30 @@ program
   .action(async cmd => {
     const spinner = ora({text: 'Generating diagram', stream: process.stdout}).start();
 
-    const errors = validation(cmd);
-    if (errors.length > 0) {
+    try {
+      validation(cmd);
+
+      const data = await readFileAsync(cmd.input, 'utf8');
+      const flow = JSON.parse(data);
+      const {nodes, edges} = flow;
+      let html = await generateHTML(nodes, edges, cmd.title);
+
+      if (cmd.minify) {
+        const minifyOptions = {
+          collapseWhitespace: true,
+          minifyCSS: true,
+          minifyJS: text => Terser.minify(text).code
+        };
+        html = HTMLMinifier.minify(html, minifyOptions);
+      }
+
+      await mkdirAsync(path.dirname(cmd.output), {recursive: true});
+      await writeFileAsync(cmd.output, html);
+    } catch (error) {
       spinner.stream = process.stderr;
-      spinner.fail(`No value provided for required options: ${errors.join(', ')}`);
+      spinner.fail(error.message);
       process.exit(1);
     }
-
-    const data = await readFileAsync(cmd.input, 'utf8');
-    const flow = JSON.parse(data);
-    const {nodes, edges} = flow;
-    let html = await generateHTML(nodes, edges, cmd.title);
-
-    if (cmd.minify) {
-      const minifyOptions = {
-        collapseWhitespace: true,
-        minifyCSS: true,
-        minifyJS: text => Terser.minify(text).code
-      };
-      html = HTMLMinifier.minify(html, minifyOptions);
-    }
-
-    await mkdirAsync(path.dirname(cmd.output), {recursive: true});
-    await writeFileAsync(cmd.output, html);
 
     spinner.succeed('Done');
   })

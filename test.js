@@ -108,6 +108,36 @@ test('given `--output` option', async t => {
   t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
 });
 
+test('given `--title` option', async t => {
+  const title = 'Test Diagram';
+
+  const {code, stdout, stderr} = await t.throwsAsync(cli(['--title', title]));
+
+  t.is(code, 1);
+  t.is(stdout, '- Generating diagram\n');
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input', '--output'\n$/);
+});
+
+test('given `--minify` option', async t => {
+  const {code, stdout, stderr} = await t.throwsAsync(cli(['--minify']));
+
+  t.is(code, 1);
+  t.is(stdout, '- Generating diagram\n');
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input', '--output'\n$/);
+});
+
+test('given `--input` with non-existent path', async t => {
+  const flowFile = path.join(cwd, 'examples', 'test.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+
+  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+
+  t.is(code, 1);
+  t.is(stdout, '- Generating diagram\n');
+  t.regex(stderr, new RegExp(`^(✖|×) ENOENT: no such file or directory, open '${flowFile}'\n$`));
+});
+
 test('given `--version` option', async t => {
   const {code, stdout, stderr} = await cli(['--version']);
 
