@@ -1,0 +1,12 @@
+{
+  "edges": [
+    {"from": 1, "to": 1, "label": "search"},
+    {"from": 1, "to": 2, "label": "select"},
+    {"from": 1, "to": 3},
+    {"from": 2, "to": 4, "label": "open"},
+    {"from": 2, "to": 5},
+    {"from": 4, "to": 2, "label": "close"},
+    {"from": 5, "to": 6},
+    {"from": 6, "to": 7}
+  ]
+}

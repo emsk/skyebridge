@@ -14,7 +14,7 @@ const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
-const validation = cmd => {
+const validateOptions = cmd => {
   const errors = [];
 
   if (cmd.input === undefined) {
@@ -30,7 +30,45 @@ const validation = cmd => {
   }
 };
 
-const generateHTML = async (nodes, edges, title) => {
+const validateRawData = data => {
+  if (data === '') {
+    throw new Error("No value provided for required keys: 'nodes', 'edges'");
+  }
+};
+
+const validateParsedData = data => {
+  const {nodes, edges} = data;
+
+  if (nodes === undefined) {
+    throw new Error("No value provided for required keys: 'nodes'");
+  }
+
+  if (edges === undefined) {
+    throw new Error("No value provided for required keys: 'edges'");
+  }
+
+  nodes.forEach(node => {
+    if (node.id === undefined) {
+      throw new Error("No value provided for required keys: 'nodes.id'");
+    }
+
+    if (node.label === undefined) {
+      throw new Error("No value provided for required keys: 'nodes.label'");
+    }
+  });
+
+  edges.forEach(edge => {
+    if (edge.from === undefined) {
+      throw new Error("No value provided for required keys: 'edges.from'");
+    }
+
+    if (edge.to === undefined) {
+      throw new Error("No value provided for required keys: 'edges.to'");
+    }
+  });
+};
+
+const generateHTML = async (data, title) => {
   const css = await readFileAsync(path.join(__dirname, 'assets/vis-network.min.css'), 'utf8');
   const js = await readFileAsync(path.join(__dirname, 'assets/vis-network.min.js'), 'utf8');
 
@@ -54,7 +92,7 @@ ${css}
     <script>
 ${js}
 
-      const nodes = JSON.parse('${JSON.stringify(nodes)}');
+      const nodes = JSON.parse('${JSON.stringify(data.nodes)}');
 
       nodes.forEach(function (node, index) {
         if (node.level === undefined) {
@@ -62,7 +100,7 @@ ${js}
         }
       });
 
-      const edges = JSON.parse('${JSON.stringify(edges)}');
+      const edges = JSON.parse('${JSON.stringify(data.edges)}');
 
       const container = document.getElementById('diagram');
       const data = {
@@ -130,12 +168,15 @@ program
     const spinner = ora({text: 'Generating diagram', stream: process.stdout}).start();
 
     try {
-      validation(cmd);
+      validateOptions(cmd);
 
-      const data = await readFileAsync(cmd.input, 'utf8');
-      const flow = JSON.parse(data);
-      const {nodes, edges} = flow;
-      let html = await generateHTML(nodes, edges, cmd.title);
+      let data = await readFileAsync(cmd.input, 'utf8');
+      validateRawData(data);
+
+      data = JSON.parse(data);
+      validateParsedData(data);
+
+      let html = await generateHTML(data, cmd.title);
 
       if (cmd.minify) {
         const minifyOptions = {
