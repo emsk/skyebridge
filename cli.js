@@ -15,18 +15,12 @@ const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
 const validateOptions = cmd => {
-  const errors = [];
-
   if (cmd.input === undefined) {
-    errors.push("'--input'");
+    throw new Error("No value provided for required options: '--input'");
   }
 
   if (cmd.output === undefined) {
-    errors.push("'--output'");
-  }
-
-  if (errors.length > 0) {
-    throw new Error(`No value provided for required options: ${errors.join(', ')}`);
+    throw new Error("No value provided for required options: '--output'");
   }
 };
 

@@ -115,7 +115,7 @@ test('given `--title` option', async t => {
 
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required options: '--input', '--output'\n$/);
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
 });
 
 test('given `--minify` option', async t => {
@@ -123,7 +123,7 @@ test('given `--minify` option', async t => {
 
   t.is(code, 1);
   t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required options: '--input', '--output'\n$/);
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
 });
 
 test('given `--input` with non-existent path', async t => {
