@@ -6,10 +6,10 @@ const {promisify} = require('util');
 const tmp = require('tmp');
 const test = require('ava');
 const execa = require('execa');
-const pkg = require('./package.json');
+const pkg = require('../package.json');
 
 const cwd = __dirname;
-const cli = (args, options) => execa(path.join(cwd, 'cli.js'), args, options);
+const cli = (args, options) => execa(path.join(cwd, '..', 'src', 'cli.js'), args, options);
 const readFileAsync = promisify(fs.readFile);
 const tmpDirAsync = promisify(tmp.dir);
 
@@ -26,14 +26,14 @@ Options:
 tmp.setGracefulCleanup();
 
 test('given `--input` and `--output` options', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
   const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile]);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
-  const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram.html'), 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
@@ -41,14 +41,14 @@ test('given `--input` and `--output` options', async t => {
 });
 
 test('given `--input`, `--output`, and `--minify` options', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
   const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
-  const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_minified.html'), 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
@@ -56,7 +56,7 @@ test('given `--input`, `--output`, and `--minify` options', async t => {
 });
 
 test('given `--input`, `--output`, and `--title` options', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
@@ -64,7 +64,7 @@ test('given `--input`, `--output`, and `--title` options', async t => {
   const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title]);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
-  const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed.html'), 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
@@ -72,7 +72,7 @@ test('given `--input`, `--output`, and `--title` options', async t => {
 });
 
 test('given `--input`, `--output`, `--title`, and `--minify` options', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
@@ -80,7 +80,7 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
   const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
-  const expected = await readFileAsync(path.join(cwd, 'examples', 'diagram_title_changed_minified.html'), 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
@@ -88,7 +88,7 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
 });
 
 test('given `--input` option', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
 
   const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile]));
 
@@ -127,7 +127,7 @@ test('given `--minify` option', async t => {
 });
 
 test('given `--input` with non-existent path', async t => {
-  const flowFile = path.join(cwd, 'examples', 'test.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'test.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -139,7 +139,7 @@ test('given `--input` with non-existent path', async t => {
 });
 
 test('given `--input` with invalid keys (`nodes`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_no_nodes.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_nodes.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -151,7 +151,7 @@ test('given `--input` with invalid keys (`nodes`)', async t => {
 });
 
 test('given `--input` with invalid keys (`nodes.id`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_no_nodes_id.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_nodes_id.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -163,7 +163,7 @@ test('given `--input` with invalid keys (`nodes.id`)', async t => {
 });
 
 test('given `--input` with invalid keys (`nodes.label`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_no_nodes_label.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_nodes_label.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -175,7 +175,7 @@ test('given `--input` with invalid keys (`nodes.label`)', async t => {
 });
 
 test('given `--input` with invalid keys (`edges`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_no_edges.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_edges.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -187,7 +187,7 @@ test('given `--input` with invalid keys (`edges`)', async t => {
 });
 
 test('given `--input` with invalid keys (`edges.from`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_no_edges_from.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_edges_from.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -199,7 +199,7 @@ test('given `--input` with invalid keys (`edges.from`)', async t => {
 });
 
 test('given `--input` with invalid keys (`edges.to`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_no_edges_to.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_edges_to.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
@@ -211,7 +211,7 @@ test('given `--input` with invalid keys (`edges.to`)', async t => {
 });
 
 test('given `--input` with invalid keys (`nodes` and `edges`)', async t => {
-  const flowFile = path.join(cwd, 'examples', 'flow_empty.json');
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_empty.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 

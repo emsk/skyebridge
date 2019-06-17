@@ -8,7 +8,7 @@ const program = require('commander');
 const ora = require('ora');
 const HTMLMinifier = require('html-minifier');
 const Terser = require('terser');
-const pkg = require('./package.json');
+const pkg = require('../package.json');
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
@@ -63,8 +63,8 @@ const validateParsedData = data => {
 };
 
 const generateHTML = async (data, title) => {
-  const css = await readFileAsync(path.join(__dirname, 'assets/vis-network.min.css'), 'utf8');
-  const js = await readFileAsync(path.join(__dirname, 'assets/vis-network.min.js'), 'utf8');
+  const css = await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.css'), 'utf8');
+  const js = await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.js'), 'utf8');
 
   return `<!DOCTYPE HTML>
 <html>

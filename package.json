@@ -12,10 +12,10 @@
   "license": "MIT",
   "author": "emsk",
   "files": [
-    "assets"
+    "src/assets"
   ],
-  "main": "cli.js",
-  "bin": "cli.js",
+  "main": "src/cli.js",
+  "bin": "src/cli.js",
   "repository": "emsk/skyebridge",
   "scripts": {
     "lint": "xo",

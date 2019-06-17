@@ -60,11 +60,11 @@ Input file (A JSON file in which flow is defined):
 
 Output file (An HTML file in which a flow diagram is drawn):
 
-![Diagram](examples/diagram.png?raw=true)
+![Diagram](diagram.png?raw=true)
 
 The nodes are freely draggable.
 
-Try [this example](examples/diagram.html).
+Try [this example](test/fixtures/output/diagram.html).
 
 ## License
 
