@@ -63,7 +63,6 @@ const validateParsedData = data => {
 };
 
 const generateHTML = async (data, title) => {
-  const css = await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.css'), 'utf8');
   const js = await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.js'), 'utf8');
 
   return `<!DOCTYPE HTML>
@@ -71,8 +70,6 @@ const generateHTML = async (data, title) => {
   <head>
     <title>${title}</title>
     <style>
-${css}
-
       body {
         margin: 0;
       }
