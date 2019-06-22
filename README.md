@@ -5,7 +5,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/t4f8lvatqdb3l4kj?svg=true)](https://ci.appveyor.com/project/emsk/skyebridge)
 [![NPM](https://img.shields.io/npm/l/skyebridge.svg)](LICENSE)
 
-skyebridge is a command-line tool to generate a flow diagram from a JSON file.
+skyebridge is a command-line tool for generating a flow diagram from a JSON file.
 
 ![Skye Bridge](skyebridge.jpg?raw=true)
 
@@ -23,16 +23,16 @@ $ skyebridge --input flow.json --output diagram.html
 
 ## Command Options
 
-| Option | Alias | Description | Default | Required |
-| :----- | :---- | :---------- | :------ | :------- |
-| `--input` | `-i` | Path of a JSON file in which the flow is defined. | | Yes |
-| `--output` | `-o` | Path of a generated HTML file. | | Yes |
-| `--title` | `-t` | Content of `<title></title>` in the generated HTML. | `Flow Diagram` | No |
-| `--minify` | `-m` | Minify the generated HTML. | | No |
+| Option | Alias | Description | Type | Default | Required |
+| :----- | :---- | :---------- | :--- | :------ | :------- |
+| `--input` | `-i` | Input file path (JSON in which a flow is defined) | `String` | | Yes |
+| `--output` | `-o` | Output file path (HTML in which a diagram is drawn) | `String` | | Yes |
+| `--title` | `-t` | Content of `<title></title>` in the HTML | `String` | `Flow Diagram` | No |
+| `--minify` | `-m` | Minify the HTML | `Boolean` | `false` | No |
 
 ## Example
 
-Input file (A JSON file in which flow is defined):
+Input file:
 
 ```json
 {
@@ -58,7 +58,7 @@ Input file (A JSON file in which flow is defined):
 }
 ```
 
-Output file (An HTML file in which a flow diagram is drawn):
+Output file:
 
 ![Diagram](diagram.png?raw=true)
 

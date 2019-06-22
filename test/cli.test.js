@@ -17,10 +17,10 @@ const helpText = `Usage: skyebridge [options]
 
 Options:
   -v, --version          output the version number
-  -i, --input <input>    path of a JSON file in which the flow is defined
-  -o, --output <output>  path of a generated HTML file
-  -t, --title <title>    content of <title></title> in the generated HTML (default: "Flow Diagram")
-  -m, --minify           minify the generated HTML
+  -i, --input <input>    input file path (JSON in which a flow is defined)
+  -o, --output <output>  output file path (HTML in which a diagram is drawn)
+  -t, --title <title>    content of <title></title> in the HTML (default: "Flow Diagram")
+  -m, --minify           minify the HTML
   -h, --help             output usage information`;
 
 tmp.setGracefulCleanup();
