@@ -14,7 +14,7 @@ const mkdirAsync = promisify(fs.mkdir);
 const minifyOptions = {
   collapseWhitespace: true,
   minifyCSS: true,
-  minifyJS: text => Terser.minify(text).code
+  minifyJS: text => Terser.minify(text, {output: {comments: /license/i}}).code
 };
 
 module.exports = class Generator {
