@@ -3,19 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
-const HTMLMinifier = require('html-minifier');
-const Terser = require('terser');
+const {fork} = require('child_process');
 const validator = require('./validator');
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
-
-const minifyOptions = {
-  collapseWhitespace: true,
-  minifyCSS: true,
-  minifyJS: text => Terser.minify(text, {output: {comments: /license/i}}).code
-};
 
 module.exports = class Generator {
   constructor(cmdOptions) {
@@ -129,9 +122,21 @@ ${js}
   }
 
   minifyHTML() {
-    if (this.minify) {
-      this.html = HTMLMinifier.minify(this.html, minifyOptions);
-    }
+    return new Promise(resolve => {
+      if (!this.minify) {
+        resolve();
+      }
+
+      const minifier = fork(path.join(__dirname, 'minifier.js'));
+
+      minifier.on('message', message => {
+        this.html = message.html;
+        minifier.kill();
+        resolve();
+      });
+
+      minifier.send({html: this.html});
+    });
   }
 
   async writeHTML() {

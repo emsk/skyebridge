@@ -32,7 +32,7 @@ program
 
       await generator.generateHTML();
 
-      generator.minifyHTML();
+      await generator.minifyHTML();
 
       await generator.writeHTML();
     } catch (error) {
@@ -42,5 +42,6 @@ program
     }
 
     spinner.succeed('Done');
+    process.exit(0);
   })
   .parse(process.argv);
