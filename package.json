@@ -12,7 +12,7 @@
   "license": "MIT",
   "author": "emsk",
   "files": [
-    "src/assets"
+    "src"
   ],
   "main": "src/cli.js",
   "bin": "src/cli.js",
