@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Flow Diagram</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #diagram {
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="diagram"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>
+    <script>
+      const nodes = JSON.parse('[{"id":1,"label":"Page 1"},{"id":2,"label":"Page 2"},{"id":3,"label":"Page 3","level":0},{"id":4,"label":"Page 4","level":1},{"id":5,"label":"Page 5","level":2},{"id":6,"label":"Page 6","level":3},{"id":7,"label":"Page 7","level":4}]');
+
+      nodes.forEach(function (node, index) {
+        if (node.level === undefined) {
+          node.level = index;
+        }
+      });
+
+      const edges = JSON.parse('[{"from":1,"to":1,"label":"search"},{"from":1,"to":2,"label":"select"},{"from":1,"to":3},{"from":2,"to":4,"label":"open"},{"from":2,"to":5},{"from":4,"to":2,"label":"close"},{"from":5,"to":6},{"from":6,"to":7}]');
+
+      const container = document.getElementById('diagram');
+      const data = {
+        nodes: nodes,
+        edges: edges
+      };
+      const options = {
+        physics: {
+          enabled: false
+        },
+        nodes: {
+          shape: 'box',
+          shapeProperties: {
+            borderRadius: 1
+          },
+          color: {
+            border: '#222',
+            background: '#fff'
+          },
+          margin: 10
+        },
+        edges: {
+          arrows: {
+            to: {
+              enabled: true,
+              scaleFactor: 0.8
+            }
+          },
+          smooth: {
+            type: 'curvedCW',
+            roundness: 0.2
+          },
+          color: {
+            color: '#222',
+            highlight: '#2b7ce9'
+          }
+        },
+        layout: {
+          hierarchical: {
+            direction: 'LR',
+            levelSeparation: 200,
+            nodeSpacing: 200
+          }
+        }
+      };
+      const network = new vis.Network(container, data, options);
+      network.setOptions({layout: {hierarchical: false}});
+    </script>
+  </body>
+</html>

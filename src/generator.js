@@ -17,6 +17,7 @@ module.exports = class Generator {
     this.output = cmdOptions.output;
     this.title = cmdOptions.title;
     this.minify = cmdOptions.minify;
+    this.cdn = cmdOptions.cdn;
   }
 
   validateCommandOptions() {
@@ -40,8 +41,6 @@ module.exports = class Generator {
   }
 
   async generateHTML() {
-    const js = await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.js'), 'utf8');
-
     this.html = `<!DOCTYPE HTML>
 <html>
   <head>
@@ -57,9 +56,48 @@ module.exports = class Generator {
   </head>
   <body>
     <div id="diagram"></div>
-    <script>
-${js}
+${await this._generateJS()}
+  </body>
+</html>`;
+  }
 
+  minifyHTML() {
+    return new Promise(resolve => {
+      if (!this.minify) {
+        resolve();
+      }
+
+      const minifier = fork(path.join(__dirname, 'minifier.js'));
+
+      minifier.on('message', message => {
+        this.html = message.html;
+        minifier.kill();
+        resolve();
+      });
+
+      minifier.send({html: this.html});
+    });
+  }
+
+  async writeHTML() {
+    await mkdirAsync(path.dirname(this.output), {recursive: true});
+    await writeFileAsync(this.output, this.html);
+  }
+
+  async _generateJS() {
+    let js = '';
+
+    if (this.cdn) {
+      js += '    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis-network.min.js"></script>\n';
+    }
+
+    js += '    <script>';
+
+    if (!this.cdn) {
+      js += `\n${await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.js'), 'utf8')}\n`;
+    }
+
+    js += `
       const nodes = JSON.parse('${JSON.stringify(this.data.nodes)}');
 
       nodes.forEach(function (node, index) {
@@ -116,31 +154,8 @@ ${js}
       };
       const network = new vis.Network(container, data, options);
       network.setOptions({layout: {hierarchical: false}});
-    </script>
-  </body>
-</html>`;
-  }
+    </script>`;
 
-  minifyHTML() {
-    return new Promise(resolve => {
-      if (!this.minify) {
-        resolve();
-      }
-
-      const minifier = fork(path.join(__dirname, 'minifier.js'));
-
-      minifier.on('message', message => {
-        this.html = message.html;
-        minifier.kill();
-        resolve();
-      });
-
-      minifier.send({html: this.html});
-    });
-  }
-
-  async writeHTML() {
-    await mkdirAsync(path.dirname(this.output), {recursive: true});
-    await writeFileAsync(this.output, this.html);
+    return js;
   }
 };

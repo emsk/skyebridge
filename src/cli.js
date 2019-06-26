@@ -17,6 +17,7 @@ program
   .option('-o, --output <output>', 'output file path (HTML in which a diagram is drawn)')
   .option('-t, --title <title>', 'content of <title></title> in the HTML', 'Flow Diagram')
   .option('-m, --minify', 'minify the HTML')
+  .option('-c, --cdn', 'minify JavaScript in the HTML by using CDN (works only online)')
   .action(async cmd => {
     const spinner = ora({text: 'Generating diagram', stream: process.stdout}).start();
 

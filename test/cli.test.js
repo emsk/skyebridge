@@ -21,6 +21,7 @@ Options:
   -o, --output <output>  output file path (HTML in which a diagram is drawn)
   -t, --title <title>    content of <title></title> in the HTML (default: "Flow Diagram")
   -m, --minify           minify the HTML
+  -c, --cdn              minify JavaScript in the HTML by using CDN (works only online)
   -h, --help             output usage information`;
 
 tmp.setGracefulCleanup();
@@ -34,21 +35,6 @@ test('given `--input` and `--output` options', async t => {
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram.html'), 'utf8');
-  t.is(actual, expected);
-  t.is(code, 0);
-  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
-  t.is(stderr, '');
-});
-
-test('given `--input`, `--output`, and `--minify` options', async t => {
-  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
-
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
-
-  const actual = await readFileAsync(diagramFile, 'utf8');
-  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_minified.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
@@ -71,6 +57,36 @@ test('given `--input`, `--output`, and `--title` options', async t => {
   t.is(stderr, '');
 });
 
+test('given `--input`, `--output`, and `--minify` options', async t => {
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
+
+  const actual = await readFileAsync(diagramFile, 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_minified.html'), 'utf8');
+  t.is(actual, expected);
+  t.is(code, 0);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
+  t.is(stderr, '');
+});
+
+test('given `--input`, `--output`, and `--cdn` options', async t => {
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--cdn']);
+
+  const actual = await readFileAsync(diagramFile, 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_cdn.html'), 'utf8');
+  t.is(actual, expected);
+  t.is(code, 0);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
+  t.is(stderr, '');
+});
+
 test('given `--input`, `--output`, `--title`, and `--minify` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
@@ -81,6 +97,53 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_minified.html'), 'utf8');
+  t.is(actual, expected);
+  t.is(code, 0);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
+  t.is(stderr, '');
+});
+
+test('given `--input`, `--output`, `--title`, and `--cdn` options', async t => {
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const title = 'Test Diagram';
+
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--cdn']);
+
+  const actual = await readFileAsync(diagramFile, 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_cdn.html'), 'utf8');
+  t.is(actual, expected);
+  t.is(code, 0);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
+  t.is(stderr, '');
+});
+
+test('given `--input`, `--output`, `--minify`, and `--cdn` options', async t => {
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify', '--cdn']);
+
+  const actual = await readFileAsync(diagramFile, 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_minified_cdn.html'), 'utf8');
+  t.is(actual, expected);
+  t.is(code, 0);
+  t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
+  t.is(stderr, '');
+});
+
+test('given `--input`, `--output`, `--title`, `--minify`, and `--cdn` options', async t => {
+  const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
+  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const title = 'Test Diagram';
+
+  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify', '--cdn']);
+
+  const actual = await readFileAsync(diagramFile, 'utf8');
+  const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_minified_cdn.html'), 'utf8');
   t.is(actual, expected);
   t.is(code, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
