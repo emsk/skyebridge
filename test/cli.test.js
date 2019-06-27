@@ -31,12 +31,12 @@ test('given `--input` and `--output` options', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile]);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile]);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -47,12 +47,12 @@ test('given `--input`, `--output`, and `--title` options', async t => {
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title]);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title]);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -62,12 +62,12 @@ test('given `--input`, `--output`, and `--minify` options', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_minified.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -77,12 +77,12 @@ test('given `--input`, `--output`, and `--cdn` options', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--cdn']);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--cdn']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_cdn.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -93,12 +93,12 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify']);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_minified.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -109,12 +109,12 @@ test('given `--input`, `--output`, `--title`, and `--cdn` options', async t => {
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--cdn']);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--cdn']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_cdn.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -124,12 +124,12 @@ test('given `--input`, `--output`, `--minify`, and `--cdn` options', async t => 
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify', '--cdn']);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify', '--cdn']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_minified_cdn.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -140,12 +140,12 @@ test('given `--input`, `--output`, `--title`, `--minify`, and `--cdn` options', 
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify', '--cdn']);
+  const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify', '--cdn']);
 
   const actual = await readFileAsync(diagramFile, 'utf8');
   const expected = await readFileAsync(path.join(cwd, 'fixtures', 'output', 'diagram_title_changed_minified_cdn.html'), 'utf8');
   t.is(actual, expected);
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.regex(stdout, /^- Generating diagram\n(✔|√) Done$/);
   t.is(stderr, '');
 });
@@ -153,40 +153,40 @@ test('given `--input`, `--output`, `--title`, `--minify`, and `--cdn` options', 
 test('given `--input` option', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required options: '--output'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--output'$/);
 });
 
 test('given `--output` option', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'$/);
 });
 
 test('given `--title` option', async t => {
   const title = 'Test Diagram';
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--title', title]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--title', title]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'$/);
 });
 
 test('given `--minify` option', async t => {
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--minify']));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--minify']));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required options: '--input'$/);
 });
 
 test('given `--input` with non-existent path', async t => {
@@ -194,11 +194,11 @@ test('given `--input` with non-existent path', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, new RegExp(`^(✖|×) ENOENT: no such file or directory, open '${flowFile.replace(/\\/g, '\\\\')}'\n$`));
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, new RegExp(`^(✖|×) ENOENT: no such file or directory, open '${flowFile.replace(/\\/g, '\\\\')}'$`));
 });
 
 test('given `--input` with invalid keys (`nodes`)', async t => {
@@ -206,11 +206,11 @@ test('given `--input` with invalid keys (`nodes`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes'$/);
 });
 
 test('given `--input` with invalid keys (`nodes.id`)', async t => {
@@ -218,11 +218,11 @@ test('given `--input` with invalid keys (`nodes.id`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes.id'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes.id'$/);
 });
 
 test('given `--input` with invalid keys (`nodes.label`)', async t => {
@@ -230,11 +230,11 @@ test('given `--input` with invalid keys (`nodes.label`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes.label'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes.label'$/);
 });
 
 test('given `--input` with invalid keys (`edges`)', async t => {
@@ -242,11 +242,11 @@ test('given `--input` with invalid keys (`edges`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'edges'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'edges'$/);
 });
 
 test('given `--input` with invalid keys (`edges.from`)', async t => {
@@ -254,11 +254,11 @@ test('given `--input` with invalid keys (`edges.from`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'edges.from'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'edges.from'$/);
 });
 
 test('given `--input` with invalid keys (`edges.to`)', async t => {
@@ -266,11 +266,11 @@ test('given `--input` with invalid keys (`edges.to`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'edges.to'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'edges.to'$/);
 });
 
 test('given `--input` with invalid keys (`nodes` and `edges`)', async t => {
@@ -278,33 +278,33 @@ test('given `--input` with invalid keys (`nodes` and `edges`)', async t => {
   const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
-  const {code, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
+  const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
-  t.is(code, 1);
-  t.is(stdout, '- Generating diagram\n');
-  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes', 'edges'\n$/);
+  t.is(exitCode, 1);
+  t.is(stdout, '- Generating diagram');
+  t.regex(stderr, /^(✖|×) No value provided for required keys: 'nodes', 'edges'$/);
 });
 
 test('given `--version` option', async t => {
-  const {code, stdout, stderr} = await cli(['--version']);
+  const {exitCode, stdout, stderr} = await cli(['--version']);
 
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.is(stdout, pkg.version);
   t.is(stderr, '');
 });
 
 test('given `--help` option', async t => {
-  const {code, stdout, stderr} = await cli(['--help']);
+  const {exitCode, stdout, stderr} = await cli(['--help']);
 
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.is(stdout, helpText);
   t.is(stderr, '');
 });
 
 test('given no options', async t => {
-  const {code, stdout, stderr} = await cli([]);
+  const {exitCode, stdout, stderr} = await cli([]);
 
-  t.is(code, 0);
+  t.is(exitCode, 0);
   t.is(stdout, helpText);
   t.is(stderr, '');
 });
