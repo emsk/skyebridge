@@ -48,5 +48,11 @@
         }
       ]
     }
+  },
+  "nyc": {
+    "reporter": [
+      "text",
+      "lcov"
+    ]
   }
 }
