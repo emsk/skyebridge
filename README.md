@@ -3,6 +3,7 @@
 [![npm](https://img.shields.io/npm/v/skyebridge.svg)](https://www.npmjs.com/package/skyebridge)
 [![Build Status](https://travis-ci.org/emsk/skyebridge.svg?branch=master)](https://travis-ci.org/emsk/skyebridge)
 [![Build status](https://ci.appveyor.com/api/projects/status/t4f8lvatqdb3l4kj?svg=true)](https://ci.appveyor.com/project/emsk/skyebridge)
+[![codecov](https://codecov.io/gh/emsk/skyebridge/branch/master/graph/badge.svg)](https://codecov.io/gh/emsk/skyebridge)
 [![NPM](https://img.shields.io/npm/l/skyebridge.svg)](LICENSE)
 
 skyebridge is a command-line tool for generating a flow diagram from a JSON file.
