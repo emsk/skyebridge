@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
-const {fork} = require('child_process');
+const execa = require('execa');
 const validator = require('./validator');
 
 const readFileAsync = promisify(fs.readFile);
@@ -67,7 +67,7 @@ ${await this._generateJS()}
         resolve();
       }
 
-      const minifier = fork(path.join(__dirname, 'minifier.js'));
+      const minifier = execa.node(path.join(__dirname, 'minifier.js'));
 
       minifier.on('message', message => {
         this.html = message.html;

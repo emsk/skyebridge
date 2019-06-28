@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "commander": "^2.20.0",
+    "execa": "^2.0.1",
     "html-minifier": "^4.0.0",
     "ora": "^3.4.0",
     "terser": "^4.0.0"
   },
   "devDependencies": {
     "ava": "^2.1.0",
-    "execa": "^2.0.1",
     "nyc": "^14.1.1",
     "tmp": "^0.1.0",
     "xo": "^0.24.0"
