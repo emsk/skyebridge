@@ -32,6 +32,12 @@ $ skyebridge --input flow.json --output diagram.html
 | `--minify` | `-m` | Minify the HTML | `Boolean` | `false` | No |
 | `--cdn` | `-c` | Minify JavaScript in the HTML by using CDN (works only online) | `Boolean` | `false` | No |
 
+## Try It Out
+
+```sh
+$ npx skyebridge --input https://raw.githubusercontent.com/emsk/skyebridge/master/test/fixtures/input/flow.json --output diagram.html
+```
+
 ## Example
 
 Input file:
