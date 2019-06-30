@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const {promisify} = require('util');
+const axios = require('axios');
 const execa = require('execa');
 const validator = require('./validator');
 
@@ -25,7 +26,12 @@ module.exports = class Generator {
   }
 
   async readJSON() {
-    this.data = await readFileAsync(this.input, 'utf8');
+    if (/^https?:/.test(this.input)) {
+      const response = await axios.get(this.input, {transformResponse: [data => data]});
+      this.data = response.data;
+    } else {
+      this.data = await readFileAsync(this.input, 'utf8');
+    }
   }
 
   validateRawData() {

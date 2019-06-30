@@ -17,7 +17,7 @@ const helpText = `Usage: skyebridge [options]
 
 Options:
   -v, --version          output the version number
-  -i, --input <input>    input file path (JSON in which a flow is defined)
+  -i, --input <input>    input file path or URL (JSON in which a flow is defined)
   -o, --output <output>  output file path (HTML in which a diagram is drawn)
   -t, --title <title>    content of <title></title> in the HTML (default: "Flow Diagram")
   -m, --minify           minify the HTML

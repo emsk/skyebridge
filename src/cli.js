@@ -13,7 +13,7 @@ if (process.argv.length === 2) {
 program
   .name('skyebridge')
   .version(pkg.version, '-v, --version')
-  .option('-i, --input <input>', 'input file path (JSON in which a flow is defined)')
+  .option('-i, --input <input>', 'input file path or URL (JSON in which a flow is defined)')
   .option('-o, --output <output>', 'output file path (HTML in which a diagram is drawn)')
   .option('-t, --title <title>', 'content of <title></title> in the HTML', 'Flow Diagram')
   .option('-m, --minify', 'minify the HTML')

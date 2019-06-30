@@ -26,7 +26,7 @@ $ skyebridge --input flow.json --output diagram.html
 
 | Option | Alias | Description | Type | Default | Required |
 | :----- | :---- | :---------- | :--- | :------ | :------- |
-| `--input` | `-i` | Input file path (JSON in which a flow is defined) | `String` | | Yes |
+| `--input` | `-i` | Input file path or URL (JSON in which a flow is defined) | `String` | | Yes |
 | `--output` | `-o` | Output file path (HTML in which a diagram is drawn) | `String` | | Yes |
 | `--title` | `-t` | Content of `<title></title>` in the HTML | `String` | `Flow Diagram` | No |
 | `--minify` | `-m` | Minify the HTML | `Boolean` | `false` | No |
