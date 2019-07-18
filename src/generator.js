@@ -100,7 +100,7 @@ ${await this._generateJS()}
     js += '    <script>';
 
     if (!this.cdn) {
-      js += `\n${await readFileAsync(path.join(__dirname, 'assets', 'vis-network.min.js'), 'utf8')}\n`;
+      js += `\n${await readFileAsync(path.join(__dirname, '..', 'node_modules', 'vis-network', 'dist', 'vis-network.min.js'), 'utf8')}\n`;
     }
 
     js += `
