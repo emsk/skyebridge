@@ -28,7 +28,7 @@
     "html-minifier": "^4.0.0",
     "ora": "^3.4.0",
     "terser": "^4.1.2",
-    "vis-network": "^5.0.0"
+    "vis-network": "^5.3.1"
   },
   "devDependencies": {
     "ava": "^2.2.0",
