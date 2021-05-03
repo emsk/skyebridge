@@ -1,6 +1,7 @@
 # skyebridge
 
 [![npm](https://img.shields.io/npm/v/skyebridge.svg)](https://www.npmjs.com/package/skyebridge)
+[![Build Status](https://github.com/emsk/skyebridge/actions/workflows/build.yml/badge.svg)](https://github.com/emsk/skyebridge/actions/workflows/build.yml)
 [![Build Status](https://travis-ci.org/emsk/skyebridge.svg?branch=main)](https://travis-ci.org/emsk/skyebridge)
 [![Build status](https://ci.appveyor.com/api/projects/status/t4f8lvatqdb3l4kj?svg=true)](https://ci.appveyor.com/project/emsk/skyebridge)
 [![codecov](https://codecov.io/gh/emsk/skyebridge/branch/main/graph/badge.svg)](https://codecov.io/gh/emsk/skyebridge)
