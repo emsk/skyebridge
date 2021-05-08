@@ -18,7 +18,7 @@ tmp.setGracefulCleanup();
 test('#readJSON given https `input` and `output`', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const flowFileURL = 'https://example.com/flow.json';
-  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
   nock('https://example.com')
@@ -36,7 +36,7 @@ test('#readJSON given https `input` and `output`', async t => {
 test('#readJSON given http `input` and `output`', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const flowFileURL = 'http://example.com/flow.json';
-  const tmpDir = await tmpDirAsync({dir: cwd, unsafeCleanup: true});
+  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
   const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
 
   nock('http://example.com')
