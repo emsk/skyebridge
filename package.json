@@ -26,7 +26,7 @@
     "commander": "^3.0.1",
     "execa": "^5.0.0",
     "html-minifier": "^4.0.0",
-    "ora": "^3.4.0",
+    "ora": "^5.4.0",
     "terser": "^4.3.1",
     "vis-network": "^6.0.0"
   },
