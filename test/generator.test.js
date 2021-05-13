@@ -10,7 +10,7 @@ const Generator = require('../src/generator');
 
 const cwd = __dirname;
 const readFileAsync = promisify(fs.readFile);
-const tmpDirAsync = promisify(tmp.dir);
+const temporaryDirAsync = promisify(tmp.dir);
 
 nock.disableNetConnect();
 tmp.setGracefulCleanup();
@@ -18,8 +18,8 @@ tmp.setGracefulCleanup();
 test('#readJSON given https `input` and `output`', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const flowFileURL = 'https://example.com/flow.json';
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   nock('https://example.com')
     .get('/flow.json')
@@ -36,8 +36,8 @@ test('#readJSON given https `input` and `output`', async t => {
 test('#readJSON given http `input` and `output`', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
   const flowFileURL = 'http://example.com/flow.json';
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   nock('http://example.com')
     .get('/flow.json')

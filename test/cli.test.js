@@ -11,7 +11,7 @@ const pkg = require('../package.json');
 const cwd = __dirname;
 const cli = (args, options) => execa(path.join(cwd, '..', 'src', 'cli.js'), args, options);
 const readFileAsync = promisify(fs.readFile);
-const tmpDirAsync = promisify(tmp.dir);
+const temporaryDirAsync = promisify(tmp.dir);
 
 const helpText = `Usage: skyebridge [options]
 
@@ -28,8 +28,8 @@ tmp.setGracefulCleanup();
 
 test('given `--input` and `--output` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile]);
 
@@ -43,8 +43,8 @@ test('given `--input` and `--output` options', async t => {
 
 test('given `--input`, `--output`, and `--title` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title]);
@@ -59,8 +59,8 @@ test('given `--input`, `--output`, and `--title` options', async t => {
 
 test('given `--input`, `--output`, and `--minify` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify']);
 
@@ -74,8 +74,8 @@ test('given `--input`, `--output`, and `--minify` options', async t => {
 
 test('given `--input`, `--output`, and `--cdn` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--cdn']);
 
@@ -89,8 +89,8 @@ test('given `--input`, `--output`, and `--cdn` options', async t => {
 
 test('given `--input`, `--output`, `--title`, and `--minify` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify']);
@@ -105,8 +105,8 @@ test('given `--input`, `--output`, `--title`, and `--minify` options', async t =
 
 test('given `--input`, `--output`, `--title`, and `--cdn` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--cdn']);
@@ -121,8 +121,8 @@ test('given `--input`, `--output`, `--title`, and `--cdn` options', async t => {
 
 test('given `--input`, `--output`, `--minify`, and `--cdn` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--minify', '--cdn']);
 
@@ -136,8 +136,8 @@ test('given `--input`, `--output`, `--minify`, and `--cdn` options', async t => 
 
 test('given `--input`, `--output`, `--title`, `--minify`, and `--cdn` options', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
   const title = 'Test Diagram';
 
   const {exitCode, stdout, stderr} = await cli(['--input', flowFile, '--output', diagramFile, '--title', title, '--minify', '--cdn']);
@@ -161,8 +161,8 @@ test('given `--input` option', async t => {
 });
 
 test('given `--output` option', async t => {
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--output', diagramFile]));
 
@@ -191,8 +191,8 @@ test('given `--minify` option', async t => {
 
 test('given `--input` with non-existent path', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'test.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -203,8 +203,8 @@ test('given `--input` with non-existent path', async t => {
 
 test('given `--input` with invalid keys (`nodes`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_nodes.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -215,8 +215,8 @@ test('given `--input` with invalid keys (`nodes`)', async t => {
 
 test('given `--input` with invalid keys (`nodes.id`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_nodes_id.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -227,8 +227,8 @@ test('given `--input` with invalid keys (`nodes.id`)', async t => {
 
 test('given `--input` with invalid keys (`nodes.label`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_nodes_label.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -239,8 +239,8 @@ test('given `--input` with invalid keys (`nodes.label`)', async t => {
 
 test('given `--input` with invalid keys (`edges`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_edges.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -251,8 +251,8 @@ test('given `--input` with invalid keys (`edges`)', async t => {
 
 test('given `--input` with invalid keys (`edges.from`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_edges_from.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -263,8 +263,8 @@ test('given `--input` with invalid keys (`edges.from`)', async t => {
 
 test('given `--input` with invalid keys (`edges.to`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_no_edges_to.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
@@ -275,8 +275,8 @@ test('given `--input` with invalid keys (`edges.to`)', async t => {
 
 test('given `--input` with invalid keys (`nodes` and `edges`)', async t => {
   const flowFile = path.join(cwd, 'fixtures', 'input', 'flow_empty.json');
-  const tmpDir = await tmpDirAsync({unsafeCleanup: true});
-  const diagramFile = path.join(tmpDir, 'test', 'diagram.html');
+  const temporaryDir = await temporaryDirAsync({unsafeCleanup: true});
+  const diagramFile = path.join(temporaryDir, 'test', 'diagram.html');
 
   const {exitCode, stdout, stderr} = await t.throwsAsync(cli(['--input', flowFile, '--output', diagramFile]));
 
