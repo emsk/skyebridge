@@ -5,7 +5,7 @@ const path = require('path');
 const {promisify} = require('util');
 const axios = require('axios');
 const execa = require('execa');
-const validator = require('./validator');
+const validator = require('./validator.js');
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);

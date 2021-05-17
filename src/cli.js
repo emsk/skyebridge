@@ -4,7 +4,7 @@
 const program = require('commander');
 const ora = require('ora');
 const pkg = require('../package.json');
-const Generator = require('./generator');
+const Generator = require('./generator.js');
 
 if (process.argv.length === 2) {
   process.argv.push('--help');

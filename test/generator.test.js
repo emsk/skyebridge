@@ -6,7 +6,7 @@ const {promisify} = require('util');
 const tmp = require('tmp');
 const test = require('ava');
 const nock = require('nock');
-const Generator = require('../src/generator');
+const Generator = require('../src/generator.js');
 
 const cwd = __dirname;
 const readFileAsync = promisify(fs.readFile);
